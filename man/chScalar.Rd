@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{chScalar}
 \alias{chScalar}
-\title{\code{is.scalar} ch(eck)}
+\title{Scalar \code{is.atomic} & \code{length == 1L} value ch(eck)}
 \usage{
 chScalar(x, asPred = FALSE)
 }
 \description{
-\code{is.scalar} ch(eck)
+Scalar \code{is.atomic} & \code{length == 1L} value ch(eck)
 }

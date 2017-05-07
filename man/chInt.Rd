@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{chInt}
 \alias{chInt}
-\title{\code{is.scalar} & \code{is.integer} ch(eck)}
+\title{\code{chScalar} & \code{chInts} ch(eck)}
 \usage{
 chInt(x, asPred = FALSE)
 }
 \description{
-\code{is.scalar} & \code{is.integer} ch(eck)
+\code{chScalar} & \code{chInts} ch(eck)
 }

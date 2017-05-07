@@ -8,26 +8,6 @@ chMessage <- function(x) {
   paste0(" ch(eck) failed on\n", r)
 }
 
-#' Generates a predicate that &s all the arguments
-#' @export
-predAnd <- function(...) {
-  preds <- list(...)
-  function(x) {
-    for (p in preds) if (!p(x)) return (FALSE)
-    TRUE
-  }
-}
-
-#' Generates a predicate that |s all the arguments
-#' @export
-predOr <- function(...) {
-  preds <- list(...)
-  function(x) {
-    for (p in preds) if (p(x)) return (TRUE)
-    FALSE
-  }
-}
-
 #' Executes a ch(eck) of pred on x
 #' @export
 ch <- function(pred, x, asPred = FALSE) {
@@ -39,35 +19,50 @@ ch <- function(pred, x, asPred = FALSE) {
 
 #' Returns a ch(eck) based on the pred
 #' @export
-defch <- function(pred) {
+chP <- function(pred) {
   function(x, asPred = FALSE) ch(pred, x, asPred)
 }
 
-#' Tells if x is a scalar value
+#' Returns a ch(eck) that &s all the passed ch(eck)s
 #' @export
-is.scalar <- function(x) is.atomic(x) && length(x) == 1L
+chAnd <- function(...) {
+  chs  <- list(...)
+  chP(function(x) {
+    for (c in chs) if (!c(x, asPred = TRUE)) return (FALSE)
+    TRUE
+  })
+}
 
-#' \code{is.scalar} ch(eck)
+#' Returns a ch(eck) that |s all the passed ch(eck)s
 #' @export
-chScalar <- defch(is.scalar)
+predOr <- function(...) {
+  chs <- list(...)
+  chP(function(x) {
+    for (c in chs) if (c(x, asPred = TRUE)) return (TRUE)
+    FALSE
+  })
+}
+
+#' Scalar \code{is.atomic} & \code{length == 1L} value ch(eck)
+#' @export
+chScalar <- chP(function(x) is.atomic(x) && length(x) == 1L)
 
 #' \code{is.logical} ch(eck)
 #' @export
-chBools  <- defch(is.logical)
+chBools  <- chP(is.logical)
 
-#' \code{is.scalar} & \code{is.logical} ch(eck)
+#' \code{chScalar} & \code{chBools} ch(eck)
 #' @export
-chBool   <- defch(predAnd(is.scalar, is.logical))
+chBool <- chAnd(chScalar, chBools)
 
 #' \code{is.integer} ch(eck)
 #' @export
-chInts <- defch(is.integer)
+chInts <- chP(is.integer)
 
-#' \code{is.scalar} & \code{is.integer} ch(eck)
+#' \code{chScalar} & \code{chInts} ch(eck)
 #' @export
-chInt  <- defch(predAnd(is.scalar, is.integer))
+chInt  <- chAnd(chScalar, chInts)
 
-# is.integer(s)
 # is.double(s)
 # is.numeric(s)
 

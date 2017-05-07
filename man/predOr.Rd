@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{predOr}
 \alias{predOr}
-\title{Generates a predicate that |s all the arguments}
+\title{Returns a ch(eck) that |s all the passed ch(eck)s}
 \usage{
 predOr(...)
 }
 \description{
-Generates a predicate that |s all the arguments
+Returns a ch(eck) that |s all the passed ch(eck)s
 }
