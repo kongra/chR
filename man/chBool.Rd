@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{chBool}
 \alias{chBool}
-\title{isScalar & is.logical ch(eck)}
+\title{\code{is.scalar} & \code{is.logical} ch(eck)}
 \usage{
 chBool(x, asPred = FALSE)
 }
 \description{
-isScalar & is.logical ch(eck)
+\code{is.scalar} & \code{is.logical} ch(eck)
 }

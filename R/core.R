@@ -47,17 +47,25 @@ defch <- function(pred) {
 #' @export
 is.scalar <- function(x) is.atomic(x) && length(x) == 1L
 
-#' isScalar ch(eck)
+#' \code{is.scalar} ch(eck)
 #' @export
 chScalar <- defch(is.scalar)
 
-#' is.logical ch(eck)
+#' \code{is.logical} ch(eck)
 #' @export
 chBools  <- defch(is.logical)
 
-#' isScalar & is.logical ch(eck)
+#' \code{is.scalar} & \code{is.logical} ch(eck)
 #' @export
-chBool   <- defch(chAnd(is.scalar, is.logical))
+chBool   <- defch(predAnd(is.scalar, is.logical))
+
+#' \code{is.integer} ch(eck)
+#' @export
+chInts <- defch(is.integer)
+
+#' \code{is.scalar} & \code{is.integer} ch(eck)
+#' @export
+chInt  <- defch(predAnd(is.scalar, is.integer))
 
 # is.integer(s)
 # is.double(s)
@@ -80,8 +88,17 @@ chBool   <- defch(chAnd(is.scalar, is.logical))
 # chUnit  (chNULL)
 # chUnits (chNULLs)
 
+# chSome
+# chSomes not null
+
+# chNo
+# chNos null | na | nan
+
 # chNA
 # chNAs
+
+# chMaybe
+# chEither
 
 # is.array
 # is.atomic
@@ -94,3 +111,5 @@ chBool   <- defch(chAnd(is.scalar, is.logical))
 # is.matrix
 # is.symbol
 # is.table
+
+# CUSTOM TAGS AND THEIR ch(eck)s

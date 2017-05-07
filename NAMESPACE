@@ -3,6 +3,8 @@
 export(ch)
 export(chBool)
 export(chBools)
+export(chInt)
+export(chInts)
 export(chScalar)
 export(defch)
 export(is.scalar)

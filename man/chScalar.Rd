@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{chScalar}
 \alias{chScalar}
-\title{isScalar ch(eck)}
+\title{\code{is.scalar} ch(eck)}
 \usage{
 chScalar(x, asPred = FALSE)
 }
 \description{
-isScalar ch(eck)
+\code{is.scalar} ch(eck)
 }
