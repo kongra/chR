@@ -63,8 +63,35 @@ chInts <- chP(is.integer)
 #' @export
 chInt  <- chAnd(chScalar, chInts)
 
-# is.double(s)
-# is.numeric(s)
+#' \code{is.double} ch(eck)
+#' @export
+chDoubles <- chP(is.double)
+
+#' \code{chScalar} & \code{chDoubles} ch(eck)
+#' @export
+chDouble  <- chAnd(chScalar, chDoubles)
+
+#' \code{is.numeric} ch(eck)
+#' @export
+chNumerics <- chP(is.numeric)
+
+#' \code{chScalar} & \code{chNumerics} ch(eck)
+#' @export
+chNumeric  <- chAnd(chScalar, chNumerics)
+
+# microbenchmark::microbenchmark(
+#   assertthat::assert_that(is.integer(1L)),
+#   assertthat::assert_that(assertthat::is.scalar(1L)),
+#   assertthat::is.scalar(1L),
+#   chInt(1L),
+#   chInts(1L),
+#   chDouble(.5),
+#   chDoubles(.5),
+#
+#   chNumeric(1L),
+#   chNumerics(1L),
+#   chNumeric(.5),
+#   chNumerics(.5))
 
 # is.nan(s)
 # is.infinite(s)
