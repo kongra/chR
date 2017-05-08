@@ -73,7 +73,7 @@ chScalar <- chP(function(x) is.atomic(x) && length(x) == 1L)
 
 #' \code{is.logical} ch(eck)
 #' @export
-chBools  <- chP(is.logical)
+chBools <- chP(is.logical)
 
 #' \code{chScalar} & \code{chBools} ch(eck)
 #' @export
@@ -85,7 +85,7 @@ chInts <- chP(is.integer)
 
 #' \code{chScalar} & \code{chInts} ch(eck)
 #' @export
-chInt  <- chAnd(chScalar, chInts)
+chInt <- chAnd(chScalar, chInts)
 
 #' \code{is.double} ch(eck)
 #' @export
@@ -93,7 +93,15 @@ chDoubles <- chP(is.double)
 
 #' \code{chScalar} & \code{chDoubles} ch(eck)
 #' @export
-chDouble  <- chAnd(chScalar, chDoubles)
+chDouble <- chAnd(chScalar, chDoubles)
+
+#' \code{is.complex} ch(eck)
+#' @export
+chComplexes <- chP(is.complex)
+
+#' \code{chScalar} & \code{chComplexes} ch(eck)
+#' @export
+chComplex <- chAnd(chScalar, chComplexes)
 
 #' \code{is.numeric} ch(eck)
 #' @export
@@ -143,6 +151,10 @@ chList <- chP(is.list)
 #' @export
 chVector <- chP(is.vector)
 
+#' \code{is.factor} ch(eck)
+#' @export
+chFactor <- chP(is.factor)
+
 #' \code{is.data.frame} ch(eck)
 #' @export
 chDF <- chP(is.data.frame)
@@ -159,16 +171,40 @@ chGgplot <- chP(ggplot2::is.ggplot)
 #' @export
 chTibble <- chP(tibble::is.tibble)
 
-# is.array
-# is.atomic
-# is.call
-# is.complex
-# is.environment
-# is.expression
-# is.factor
-# is.function
-# is.matrix
-# is.symbol
-# is.table
+#' \code{is.array} ch(eck)
+#' @export
+chArray <- chP(is.array)
+
+#' \code{is.atomic} ch(eck)
+#' @export
+chAtomic <- chP(is.atomic)
+
+#' \code{is.function} ch(eck)
+#' @export
+chFun <- chP(is.function)
+
+#' \code{is.matrix} ch(eck)
+#' @export
+chMatrix <- chP(is.matrix)
+
+#' \code{is.table} ch(eck)
+#' @export
+chTable <- chP(is.table)
+
+#' \code{is.environment} ch(eck)
+#' @export
+chEnv <- chP(is.environment)
+
+#' \code{is.call} ch(eck)
+#' @export
+chCall <- chP(is.call)
+
+#' \code{is.expression} ch(eck)
+#' @export
+chExpr <- chP(is.expression)
+
+#' \code{is.symbol} ch(eck)
+#' @export
+chSymbol <- chP(is.symbol)
 
 # CUSTOM TAGS AND THEIR ch(eck)s
