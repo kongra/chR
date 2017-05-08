@@ -6,6 +6,8 @@
 #' @import tibble
 NULL
 
+# ESSENTIALS
+
 errMessage <- function(x) {
   r <- paste(capture.output(str(x)), collapse = "\n")
   paste0(" ch(eck) failed on\n", r)
@@ -26,6 +28,10 @@ chP <- function(pred) {
   function(x, asPred = FALSE) ch(pred, x, asPred)
 }
 
+#' Returns a \code{inherits(., cls)} ch(eck)
+#' @export
+chInstance <- function(class) chP(function(x) inherits(x, class))
+
 #' Returns a ch(eck) that &s all the passed ch(eck)s
 #' @export
 chAnd <- function(...) {
@@ -45,6 +51,8 @@ chOr <- function(...) {
     FALSE
   })
 }
+
+# CH(ECK)S
 
 #' \code{is.null} ch(eck)
 #' @export
@@ -207,4 +215,8 @@ chExpr <- chP(is.expression)
 #' @export
 chSymbol <- chP(is.symbol)
 
-# CUSTOM TAGS AND THEIR ch(eck)s
+# TAGGED (CONSTRAINED) VALUES
+
+tagged <- function(class, x) {
+  structure(list(value = x), class = class)
+}
