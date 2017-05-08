@@ -1,9 +1,12 @@
 # Copyright (c) Konrad Grzanek
 # Created: 2017-05-05
 
-options(show.error.locations = TRUE)
+#' @import data.table
+#' @import ggplot2
+#' @import tibble
+NULL
 
-chMessage <- function(x) {
+errMessage <- function(x) {
   r <- paste(capture.output(str(x)), collapse = "\n")
   paste0(" ch(eck) failed on\n", r)
 }
@@ -13,7 +16,7 @@ chMessage <- function(x) {
 ch <- function(pred, x, asPred = FALSE) {
   r <- pred(x)
   if (asPred) return(r)
-  if (!r)     stop(chMessage(x))
+  if (!r)     stop(errMessage(x))
   x
 }
 
@@ -35,13 +38,34 @@ chAnd <- function(...) {
 
 #' Returns a ch(eck) that |s all the passed ch(eck)s
 #' @export
-predOr <- function(...) {
+chOr <- function(...) {
   chs <- list(...)
   chP(function(x) {
     for (c in chs) if (c(x, asPred = TRUE)) return (TRUE)
     FALSE
   })
 }
+
+#' \code{is.null} ch(eck)
+#' @export
+chUnit <- chP(is.null)
+
+#' \code{!is.null} ch(eck)
+#' @export
+chSome <- chP(function(x) !is.null(x))
+
+#' \code{is.na} ch(eck)
+#' @export
+chNA <- chP(is.na)
+
+#' Either ch(eck) where the left and right types are expressed by checks
+#' cl and cr.
+#' @export
+chEither <- function(cl, cr, x, asPred = FALSE) chOr(cl, cr)(x, asPred)
+
+#' Maybe ch(eck)
+#' @export
+chMaybe <- function(c, x, asPred = FALSE) chEither(chUnit, c, x, asPred)
 
 #' Scalar \code{is.atomic} & \code{length == 1L} value ch(eck)
 #' @export
@@ -79,48 +103,61 @@ chNumerics <- chP(is.numeric)
 #' @export
 chNumeric  <- chAnd(chScalar, chNumerics)
 
-# microbenchmark::microbenchmark(
-#   assertthat::assert_that(is.integer(1L)),
-#   assertthat::assert_that(assertthat::is.scalar(1L)),
-#   assertthat::is.scalar(1L),
-#   chInt(1L),
-#   chInts(1L),
-#   chDouble(.5),
-#   chDoubles(.5),
-#
-#   chNumeric(1L),
-#   chNumerics(1L),
-#   chNumeric(.5),
-#   chNumerics(.5))
+#' \code{is.infinite} ch(eck)
+#' @export
+chInfinites <- chP(is.infinite)
 
-# is.nan(s)
-# is.infinite(s)
-# is.finite(s)
+#' \code{chScalar} & \code{chInfinites} ch(eck)
+#' @export
+chInfinite  <- chAnd(chScalar, chInfinites)
 
-# natural int(s)
-# positive int(s)
+#' \code{is.Finite} ch(eck)
+#' @export
+chFinites <- chP(is.finite)
 
-# is.character (isString isStrings)
+#' \code{chScalar} & \code{chFinites} ch(eck)
+#' @export
+chFinite  <- chAnd(chScalar, chFinites)
 
-# list
-# vector
-# data.frame
-# data.table
+#' \code{chInt} & > 0 ch(eck)
+#' @export
+chPosInt <- chAnd(chInt, chP(function (x) x > 0))
 
-# chUnit  (chNULL)
-# chUnits (chNULLs)
+#' \code{chInt} & >= 0 ch(eck)
+#' @export
+chNatInt <- chAnd(chInt, chP(function (x) x >= 0))
 
-# chSome
-# chSomes not null
+#' \code{is.character} ch(eck)
+#' @export
+chStrings <- chP(is.character)
 
-# chNo
-# chNos null | na | nan
+#' \code{chScalar} & \code{chStrings} ch(eck)
+#' @export
+chString <- chAnd(chScalar, chStrings)
 
-# chNA
-# chNAs
+#' \code{is.list} ch(eck)
+#' @export
+chList <- chP(is.list)
 
-# chMaybe
-# chEither
+#' \code{is.vector} ch(eck)
+#' @export
+chVector <- chP(is.vector)
+
+#' \code{is.data.frame} ch(eck)
+#' @export
+chDF <- chP(is.data.frame)
+
+#' \code{data.table::is.data.table} ch(eck)
+#' @export
+chDT <- chP(data.table::is.data.table)
+
+#' \code{ggplot2::is.ggplot} ch(eck)
+#' @export
+chGgplot <- chP(ggplot2::is.ggplot)
+
+#' \code{tibble::is.tibble} ch(eck)
+#' @export
+chTibble <- chP(tibble::is.tibble)
 
 # is.array
 # is.atomic
