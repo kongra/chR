@@ -76,7 +76,7 @@ chFun <- chP(is.function)
 
 # REGISTRY
 
-checksRegistry <- list()
+CHSREG <- list()
 
 #' Registeres the ch(eck) using an optional name (ch(eck) name by default)
 #' @export
@@ -84,7 +84,7 @@ chReg <- function(ch, name = NA) chUnit({ # BEWARE: THREAD UNSAFE
   if (is.na(name)) {
     name <- as.character(substitute(ch))
   }
-  checksRegistry[[chString(name)]] <<- chFun(ch)
+  CHSREG[[chString(name)]] <<- chFun(ch)
   NULL
 })
 
@@ -103,7 +103,7 @@ chReg(chSome)
 
 #' \code{is.na} ch(eck)
 #' @export
-chNA <- chP(is.na)
+chNA <- chAnd(chScalar, chP(is.na))
 chReg(chNA)
 
 #' Either ch(eck) where the left and right types are expressed by checks
@@ -164,26 +164,6 @@ chReg(chNumerics)
 #' @export
 chNumeric  <- chAnd(chScalar, chNumerics)
 chReg(chNumeric)
-
-#' \code{is.infinite} ch(eck)
-#' @export
-chInfinites <- chP(is.infinite)
-chReg(chInfinites)
-
-#' \code{chScalar} & \code{chInfinites} ch(eck)
-#' @export
-chInfinite  <- chAnd(chScalar, chInfinites)
-chReg(chInfinite)
-
-#' \code{is.Finite} ch(eck)
-#' @export
-chFinites <- chP(is.finite)
-chReg(chFinites)
-
-#' \code{chScalar} & \code{chFinites} ch(eck)
-#' @export
-chFinite  <- chAnd(chScalar, chFinites)
-chReg(chFinite)
 
 #' \code{chInt} & > 0 ch(eck)
 #' @export
@@ -271,6 +251,20 @@ chSymbol <- chP(is.symbol)
 chReg(chSymbol)
 
 # QUERYING THE REGISTRY
+
+#' Returns a collection of ch(eck)s names that x passes
+#' @export
+chs <- function(x) chStrings ({
+  r <- character()
+  for (k in names(CHSREG)) {
+    p <- CHSREG[[k]]
+    if (p(x, asPred = TRUE)) r <- append(r, k)
+  }
+  sort(r)
+})
+
+# chsAll(...)
+# chsDiff(...)
 
 # TAGGED (CONSTRAINED) VALUES
 
