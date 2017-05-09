@@ -13,4 +13,5 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports: data.table,
     ggplot2,
-    tibble
+    tibble,
+    purrr

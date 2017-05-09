@@ -4,6 +4,7 @@
 #' @import data.table
 #' @import ggplot2
 #' @import tibble
+#' @import purrr
 NULL
 
 # ESSENTIALS
@@ -255,12 +256,7 @@ chReg(chSymbol)
 #' Returns a collection of ch(eck)s names that x passes
 #' @export
 chs <- function(x) chStrings ({
-  r <- character()
-  for (k in names(CHSREG)) {
-    p <- CHSREG[[k]]
-    if (p(x, asPred = TRUE)) r <- append(r, k)
-  }
-  sort(r)
+  CHSREG %>% keep(~ .x(x, asPred = TRUE)) %>% names() %>% sort()
 })
 
 # chsAll(...)
