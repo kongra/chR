@@ -33,6 +33,10 @@ chP <- function(pred) {
 #' @export
 chInstance <- function(class) chP(function(x) inherits(x, class))
 
+#' Returns a ch(eck) that is a negation of the passed ch(eck)
+#' @export
+chNot <- function(c) chP(function(x) !c(x, asPred = TRUE))
+
 #' Returns a ch(eck) that &s all the passed ch(eck)s
 #' @export
 chAnd <- function(...) {
