@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{chs}
 \alias{chs}
-\title{Returns a collection of ch(eck)s names that x passes}
+\title{Returns a vector of ch(eck)s names that x passes}
 \usage{
 chs(x)
 }
 \description{
-Returns a collection of ch(eck)s names that x passes
+Returns a vector of ch(eck)s names that x passes
 }

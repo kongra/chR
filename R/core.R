@@ -254,14 +254,24 @@ chReg(chSymbol)
 
 # QUERYING THE REGISTRY
 
-#' Returns a collection of ch(eck)s names that x passes
+#' Returns a vector of ch(eck)s names that x passes
 #' @export
 chs <- function(x) chStrings ({
   CHSREG %>% keep(~ .x(x, asPred = TRUE)) %>% names() %>% sort()
 })
 
-# chsAll(...)
-# chsDiff(...)
+#' Returns a vector of ch(eck)s names passed by all the arguments
+#' @export
+chsAll <- function(...) chStrings ({
+  list(...) %>% map(~ chs(.x)) %>% reduce(intersect)
+})
+
+#' Returns a vector of ch(eck)s names passed by the first argument, but not
+#' passed by the rest of the args
+#' @export
+chsDiff <- function(...) chStrings ({
+  list(...) %>% map(~ chs(.x)) %>% reduce(setdiff)
+})
 
 # TAGGED (CONSTRAINED) VALUES
 
