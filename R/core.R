@@ -1,9 +1,6 @@
 # Copyright (c) Konrad Grzanek
 # Created: 2017-05-05
 
-#' @import data.table
-#' @import ggplot2
-#' @import tibble
 #' @import purrr
 NULL
 
