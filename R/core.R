@@ -222,6 +222,16 @@ chReg(chArray)
 chAtomic <- chP(is.atomic)
 chReg(chAtomic)
 
+#' \code{is.recursive} ch(eck)
+#' @export
+chRecursive <- chP(is.recursive)
+chReg(chRecursive)
+
+#' \code{is.object} ch(eck)
+#' @export
+chObject <- chP(is.object)
+chReg(chObject)
+
 #' \code{is.matrix} ch(eck)
 #' @export
 chMatrix <- chP(is.matrix)
