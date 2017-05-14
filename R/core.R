@@ -177,6 +177,16 @@ chReg(chPosInt)
 chNatInt <- chAnd(chInt, chP(function (x) x >= 0))
 chReg(chNatInt)
 
+#' \code{chInt} & even? check
+#' @export
+chEvenInt <- chAnd(chInt, chP(function (x) x %% 2L == 0L))
+chReg(chEvenInt)
+
+#' \code{chInt} & odd? check
+#' @export
+chOddInt <- chAnd(chInt, chP(function (x) x %% 2L != 0L))
+chReg(chOddInt)
+
 #' \code{is.list} ch(eck)
 #' @export
 chList <- chP(is.list)
