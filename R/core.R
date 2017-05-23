@@ -1,6 +1,7 @@
 # Copyright (c) Konrad Grzanek
 # Created: 2017-05-05
 
+#' @import stringr
 #' @import purrr
 NULL
 
@@ -271,6 +272,22 @@ chReg(chExpr)
 #' @export
 chSymbol <- chP(is.symbol)
 chReg(chSymbol)
+
+#' \code{s == ""} ch(eck) for String, deliberately not chReg-ed
+#' @export
+chEmptyString <- chAnd(chString, chP(function(s) s == ""))
+
+#' \code{s != ""} ch(eck) for String, deliberately not chReg-ed
+#' @export
+chNonEmptyString <- chNot(chEmptyString)
+
+#' Blank-ness ch(eck) for String, deliberately not chReg-ed
+#' @export
+chBlank <- chAnd(chString, chP(function(s) is.na(readr::parse_character(s))))
+
+#' Non blank-ness ch(eck) for String, deliberately not chReg-ed
+#' @export
+chNonBlank <- chNot(chBlank)
 
 # QUERYING THE REGISTRY
 
