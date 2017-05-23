@@ -312,8 +312,8 @@ chsDiff <- function(...) chStrings ({
 
 # TAGGED (CONSTRAINED) VALUES
 
-#' Returns x tagged with class
+#' Returns x tagged with class=tag
 #' @export
-tagged <- function(class, x) {
-  structure(list(value = x), class = class)
+tagged <- function(x, tag) {
+  structure(list(value = x), class = tag)
 }

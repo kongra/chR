@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{tagged}
 \alias{tagged}
-\title{Returns x tagged with class}
+\title{Returns x tagged with class=tag}
 \usage{
-tagged(class, x)
+tagged(x, tag)
 }
 \description{
-Returns x tagged with class
+Returns x tagged with class=tag
 }
