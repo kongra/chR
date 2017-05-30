@@ -213,6 +213,17 @@ chReg(chDF)
 chDT <- chP(data.table::is.data.table)
 chReg(chDT)
 
+#' Returns a check for the data.table having exactly n rows
+#' @export
+chDTn <- function(n) {
+  chNatInt(n)
+  chAnd(chDT, chP(function(dt) nrow(dt) == n))
+}
+
+#' Ch(eck) for a single-row data.table
+#' @export
+chDT1 <- chDTn(1L)
+
 #' \code{ggplot2::is.ggplot} ch(eck)
 #' @export
 chGgplot <- chP(ggplot2::is.ggplot)
