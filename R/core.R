@@ -220,9 +220,23 @@ chDTn <- function(n) {
   chAnd(chDT, chP(function(dt) nrow(dt) == n))
 }
 
+#' Returns a check for the data.table having exactly 0 or n rows
+#' @export
+chDT0n <- function(n) {
+  chNatInt(n)
+  chAnd(chDT, chP(function(dt) {
+    nr <- nrow(dt)
+    nr == 0L || nr == n
+  }))
+}
+
 #' Ch(eck) for a single-row data.table
 #' @export
 chDT1 <- chDTn(1L)
+
+#' Ch(eck) for an empty or single-row data.table
+#' @export
+chDT01 <- chDT0n(1L)
 
 #' \code{ggplot2::is.ggplot} ch(eck)
 #' @export
