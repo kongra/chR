@@ -15,5 +15,7 @@ Imports: data.table,
     ggplot2,
     tibble,
     purrr,
-    readr
+    readr,
+    Rcpp
+LinkingTo: Rcpp
 Suggests: testthat

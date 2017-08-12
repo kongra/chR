@@ -3,6 +3,8 @@
 
 #' @import stringr
 #' @import purrr
+#' @useDynLib chR
+#' @importFrom Rcpp sourceCpp
 NULL
 
 # ESSENTIALS
