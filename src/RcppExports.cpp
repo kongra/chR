@@ -38,11 +38,47 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// arePosDoubles
+bool arePosDoubles(const DoubleVector xs);
+RcppExport SEXP _chR_arePosDoubles(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const DoubleVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(arePosDoubles(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// areNegDoubles
+bool areNegDoubles(const DoubleVector xs);
+RcppExport SEXP _chR_areNegDoubles(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const DoubleVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(areNegDoubles(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// areNonNegDoubles
+bool areNonNegDoubles(const DoubleVector xs);
+RcppExport SEXP _chR_areNonNegDoubles(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const DoubleVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(areNonNegDoubles(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_chR_arePosInts", (DL_FUNC) &_chR_arePosInts, 1},
     {"_chR_areNegInts", (DL_FUNC) &_chR_areNegInts, 1},
     {"_chR_areNatInts", (DL_FUNC) &_chR_areNatInts, 1},
+    {"_chR_arePosDoubles", (DL_FUNC) &_chR_arePosDoubles, 1},
+    {"_chR_areNegDoubles", (DL_FUNC) &_chR_areNegDoubles, 1},
+    {"_chR_areNonNegDoubles", (DL_FUNC) &_chR_areNonNegDoubles, 1},
     {NULL, NULL, 0}
 };
 

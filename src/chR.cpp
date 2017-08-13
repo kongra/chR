@@ -20,7 +20,8 @@ static inline bool everyInVector(const V xs, const F&& pred) {
 //
 
 //' Returns true iff all the xs are positive
-//' @param xs
+//' @param xs vector to check
+//' @return true or false
 //' @export
 // [[Rcpp::export]]
 bool arePosInts(const IntegerVector xs) {
@@ -28,7 +29,8 @@ bool arePosInts(const IntegerVector xs) {
 }
 
 //' Returns true iff all the xs are negative
-//' @param xs
+//' @param xs vector to check
+//' @return true or false
 //' @export
 // [[Rcpp::export]]
 bool areNegInts(const IntegerVector xs) {
@@ -36,7 +38,8 @@ bool areNegInts(const IntegerVector xs) {
 }
 
 //' Returns true iff all the xs are naturals (>= 0)
-//' @param xs
+//' @param xs vector to check
+//' @return true or false
 //' @export
 // [[Rcpp::export]]
 bool areNatInts(const IntegerVector xs) {
@@ -45,3 +48,30 @@ bool areNatInts(const IntegerVector xs) {
 
 // DOUBLES
 //
+
+//' Returns true iff all the xs are positive
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool arePosDoubles(const DoubleVector xs) {
+  return everyInVector(xs, [](double d) { return d > 0; });
+}
+
+//' Returns true iff all the xs are negative
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool areNegDoubles(const DoubleVector xs) {
+  return everyInVector(xs, [](double d) { return d < 0; });
+}
+
+//' Returns true iff all the xs are non-negative
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool areNonNegDoubles(const DoubleVector xs) {
+  return everyInVector(xs, [](double d) { return d >= 0; });
+}

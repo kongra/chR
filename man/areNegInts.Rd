@@ -6,6 +6,12 @@
 \usage{
 areNegInts(xs)
 }
+\arguments{
+\item{xs}{vector to check}
+}
+\value{
+true or false
+}
 \description{
 Returns true iff all the xs are negative
 }

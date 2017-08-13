@@ -2,23 +2,50 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' Returns true iff all the xs are positive
-#' @param xs
+#' @param xs vector to check
+#' @return true or false
 #' @export
 arePosInts <- function(xs) {
     .Call('_chR_arePosInts', PACKAGE = 'chR', xs)
 }
 
 #' Returns true iff all the xs are negative
-#' @param xs
+#' @param xs vector to check
+#' @return true or false
 #' @export
 areNegInts <- function(xs) {
     .Call('_chR_areNegInts', PACKAGE = 'chR', xs)
 }
 
 #' Returns true iff all the xs are naturals (>= 0)
-#' @param xs
+#' @param xs vector to check
+#' @return true or false
 #' @export
 areNatInts <- function(xs) {
     .Call('_chR_areNatInts', PACKAGE = 'chR', xs)
+}
+
+#' Returns true iff all the xs are positive
+#' @param xs vector to check
+#' @return true or false
+#' @export
+arePosDoubles <- function(xs) {
+    .Call('_chR_arePosDoubles', PACKAGE = 'chR', xs)
+}
+
+#' Returns true iff all the xs are negative
+#' @param xs vector to check
+#' @return true or false
+#' @export
+areNegDoubles <- function(xs) {
+    .Call('_chR_areNegDoubles', PACKAGE = 'chR', xs)
+}
+
+#' Returns true iff all the xs are non-negative
+#' @param xs vector to check
+#' @return true or false
+#' @export
+areNonNegDoubles <- function(xs) {
+    .Call('_chR_areNonNegDoubles', PACKAGE = 'chR', xs)
 }
 
