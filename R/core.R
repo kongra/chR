@@ -180,6 +180,16 @@ chReg(chPosInts)
 chPosInt <- chAnd(chInt, chP(arePosInts))
 chReg(chPosInt)
 
+#' \code{chDoubles} & > 0 ch(eck)
+#' @export
+chPosDoubles <- chAnd(chDoubles, chP(arePosDoubles))
+chReg(chPosDoubles)
+
+#' \code{chDouble} & > 0 ch(eck)
+#' @export
+chPosDouble <- chAnd(chDouble, chP(arePosDoubles))
+chReg(chPosDouble)
+
 #' \code{chInts} & < 0 ch(eck)
 #' @export
 chNegInts <- chAnd(chInts, chP(areNegInts))
@@ -190,6 +200,16 @@ chReg(chNegInts)
 chNegInt <- chAnd(chInt, chP(areNegInts))
 chReg(chNegInt)
 
+#' \code{chDoubles} & < 0 ch(eck)
+#' @export
+chNegDoubles <- chAnd(chDoubles, chP(areNegDoubles))
+chReg(chNegDoubles)
+
+#' \code{chDouble} & < 0 ch(eck)
+#' @export
+chNegDouble <- chAnd(chDouble, chP(areNegDoubles))
+chReg(chNegDouble)
+
 #' \code{chInts} & >= 0 ch(eck)
 #' @export
 chNatInts <- chAnd(chInts, chP(areNatInts))
@@ -199,6 +219,16 @@ chReg(chNatInts)
 #' @export
 chNatInt <- chAnd(chInt, chP(areNatInts))
 chReg(chNatInt)
+
+#' \code{chDoubles} & < 0 ch(eck)
+#' @export
+chNonNegDoubles <- chAnd(chDoubles, chP(areNonNegDoubles))
+chReg(chNonNegDoubles)
+
+#' \code{chDouble} & < 0 ch(eck)
+#' @export
+chNonNegDouble <- chAnd(chDouble, chP(areNonNegDoubles))
+chReg(chNonNegDouble)
 
 #' \code{chInt} & even? check
 #' @export
