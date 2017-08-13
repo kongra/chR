@@ -220,12 +220,12 @@ chReg(chNatInts)
 chNatInt <- chAnd(chInt, chP(areNatInts))
 chReg(chNatInt)
 
-#' \code{chDoubles} & < 0 ch(eck)
+#' \code{chDoubles} & >= 0 ch(eck)
 #' @export
 chNonNegDoubles <- chAnd(chDoubles, chP(areNonNegDoubles))
 chReg(chNonNegDoubles)
 
-#' \code{chDouble} & < 0 ch(eck)
+#' \code{chDouble} & >= 0 ch(eck)
 #' @export
 chNonNegDouble <- chAnd(chDouble, chP(areNonNegDoubles))
 chReg(chNonNegDouble)

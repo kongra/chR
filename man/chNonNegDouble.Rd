@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{chNonNegDouble}
 \alias{chNonNegDouble}
-\title{\code{chDouble} & < 0 ch(eck)}
+\title{\code{chDouble} & >= 0 ch(eck)}
 \usage{
 chNonNegDouble(x, asPred = FALSE)
 }
 \description{
-\code{chDouble} & < 0 ch(eck)
+\code{chDouble} & >= 0 ch(eck)
 }
