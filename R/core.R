@@ -368,6 +368,16 @@ chBlank <- chAnd(chString, chP(function(s) is.na(readr::parse_character(s))))
 #' @export
 chNonBlank <- chNot(chBlank)
 
+#' \code{is.Date} ch(eck)
+#' @export
+chDates <- chP(is.Date)
+chReg(chDates)
+
+#' \code{chScalar} & \code{chDates} ch(eck)
+#' @export
+chDate  <- chAnd(chScalar, chDates)
+chReg(chDate)
+
 # QUERYING THE REGISTRY
 
 #' Returns a vector of ch(eck)s names that x passes
