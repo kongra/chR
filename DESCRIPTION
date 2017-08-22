@@ -16,6 +16,7 @@ Imports: data.table,
     tibble,
     purrr,
     readr,
-    Rcpp
+    Rcpp,
+    lubridate
 LinkingTo: Rcpp
 Suggests: testthat

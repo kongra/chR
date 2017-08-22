@@ -368,9 +368,9 @@ chBlank <- chAnd(chString, chP(function(s) is.na(readr::parse_character(s))))
 #' @export
 chNonBlank <- chNot(chBlank)
 
-#' \code{is.Date} ch(eck)
+#' \code{lubridate::is.Date} ch(eck)
 #' @export
-chDates <- chP(is.Date)
+chDates <- chP(lubridate::is.Date)
 chReg(chDates)
 
 #' \code{chScalar} & \code{chDates} ch(eck)
