@@ -26,7 +26,8 @@ ch <- function(pred, x, asPred = FALSE) {
 #' Returns a ch(eck) based on the pred
 #' @export
 chP <- function(pred) {
-  function(x, asPred = FALSE) ch(pred, x, asPred)
+  function(x, asPred = FALSE) ch  (pred, x, asPred)
+# function(x, asPred = FALSE) chLL(pred, x, asPred, errMessage)
 }
 
 #' Returns a \code{inherits(., cls)} ch(eck)
@@ -85,13 +86,11 @@ CHSREG <- list()
 
 #' Registeres the ch(eck) using an optional name (ch(eck) name by default)
 #' @export
-chReg <- function(ch, name = NA) chUnit({ # BEWARE: THREAD UNSAFE
-  if (is.na(name)) {
-    name <- as.character(substitute(ch))
-  }
-  CHSREG[[chString(name)]] <<- chFun(ch)
+chReg <- function(ch, name = NA) { # BEWARE: THREAD UNSAFE
+  if (is.na(name)) name <- as.character(substitute(ch))
+  CHSREG[[as.character(name)]] <<- as.function(ch)
   NULL
-})
+}
 
 chReg(chUnit)
 chReg(chScalar)

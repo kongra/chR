@@ -2,10 +2,10 @@
 % Please edit documentation in R/core.R
 \name{chDates}
 \alias{chDates}
-\title{\code{is.Date} ch(eck)}
+\title{\code{lubridate::is.Date} ch(eck)}
 \usage{
 chDates(x, asPred = FALSE)
 }
 \description{
-\code{is.Date} ch(eck)
+\code{lubridate::is.Date} ch(eck)
 }

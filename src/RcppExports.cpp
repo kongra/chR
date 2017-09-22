@@ -5,6 +5,30 @@
 
 using namespace Rcpp;
 
+// callsCount
+std::uint64_t callsCount();
+RcppExport SEXP _chR_callsCount() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(callsCount());
+    return rcpp_result_gen;
+END_RCPP
+}
+// chLL
+SEXP chLL(const Function pred, const SEXP x, const bool asPred, const Function errMessage);
+RcppExport SEXP _chR_chLL(SEXP predSEXP, SEXP xSEXP, SEXP asPredSEXP, SEXP errMessageSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Function >::type pred(predSEXP);
+    Rcpp::traits::input_parameter< const SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const bool >::type asPred(asPredSEXP);
+    Rcpp::traits::input_parameter< const Function >::type errMessage(errMessageSEXP);
+    rcpp_result_gen = Rcpp::wrap(chLL(pred, x, asPred, errMessage));
+    return rcpp_result_gen;
+END_RCPP
+}
 // arePosInts
 bool arePosInts(const IntegerVector xs);
 RcppExport SEXP _chR_arePosInts(SEXP xsSEXP) {
@@ -73,6 +97,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_chR_callsCount", (DL_FUNC) &_chR_callsCount, 0},
+    {"_chR_chLL", (DL_FUNC) &_chR_chLL, 4},
     {"_chR_arePosInts", (DL_FUNC) &_chR_arePosInts, 1},
     {"_chR_areNegInts", (DL_FUNC) &_chR_areNegInts, 1},
     {"_chR_areNatInts", (DL_FUNC) &_chR_areNatInts, 1},

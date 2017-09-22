@@ -1,10 +1,37 @@
 // Copyright (c) Konrad Grzanek
 // Created 2017-08-12
 //
+#include <atomic>
 #include <Rcpp.h>
 using namespace Rcpp;
 
 // [[Rcpp::plugins(cpp11)]]
+
+// CALLING THE PREDICATES
+//
+static std::atomic<std::uint64_t> chCallsCounter(0);
+
+//' Returns the value of calls counter
+//' @export
+// [[Rcpp::export]]
+std::uint64_t callsCount()
+{
+  return chCallsCounter;
+}
+
+//' Low Level ch(eck) call
+//' @export
+// [[Rcpp::export]]
+SEXP chLL(const Function pred,
+          const SEXP x,
+          const bool asPred,
+          const Function errMessage) {
+  chCallsCounter++;
+  const SEXP r = pred(x);
+  if (asPred) return r;
+  if (!as<bool>(r)) stop(as<const char*>(errMessage(x)));
+  return x;
+}
 
 // ABSTRACTION FOR CHECKING PREDICATES ON VECTORS
 //
