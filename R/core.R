@@ -281,6 +281,11 @@ chDT0n <- function(n) {
   }))
 }
 
+#' Ch(eck) for an empty data.table
+#' @export
+chDT0 <- NULL
+delayedAssign("chDT0", chDTn(0L))
+
 #' Ch(eck) for a single-row data.table
 #' @export
 chDT1 <- NULL
