@@ -174,6 +174,7 @@ chReg(chNumeric)
 chPosInts <- chAnd(chInts, chP(arePosInts))
 chReg(chPosInts)
 
+#' \code{chInts} & > 0 || is.na ch(eck)
 #' @export
 chPosNAInts <- chAnd(chInts, chP(arePosIntsOrNAs))
 chReg(chPosNAInts)
@@ -183,6 +184,7 @@ chReg(chPosNAInts)
 chPosInt <- chAnd(chInt, chP(arePosInts))
 chReg(chPosInt)
 
+#' \code{chInt} & > 0 || is.na ch(eck)
 #' @export
 chPosNAInt <- chAnd(chInt, chP(arePosIntsOrNAs))
 chReg(chPosNAInt)
