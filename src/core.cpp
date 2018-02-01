@@ -35,11 +35,20 @@ SEXP chLL(const Function pred,
 
 // ABSTRACTION FOR CHECKING PREDICATES ON VECTORS
 //
-
 template<typename V, typename F>
 static inline bool everyInVector(const V xs, const F&& pred) {
   const int n = xs.size();
   for (int i = 0; i < n; i++) if (!pred(xs[i])) return false;
+  return true;
+}
+
+template<typename V, typename F>
+static inline bool everyInVectorOrNAs(const V xs, const F&& pred) {
+  const int n = xs.size();
+  for (int i = 0; i < n; i++) {
+    if (V::is_na(xs[i])) continue;
+    if (!pred   (xs[i])) return false;
+  }
   return true;
 }
 
@@ -55,6 +64,15 @@ bool arePosInts(const IntegerVector xs) {
   return everyInVector(xs, [](int n) { return n > 0; });
 }
 
+//' Returns true iff all the xs are positive or NAs
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool arePosIntsOrNAs(const IntegerVector xs) {
+  return everyInVectorOrNAs(xs, [](int n) { return n > 0; });
+}
+
 //' Returns true iff all the xs are negative
 //' @param xs vector to check
 //' @return true or false
@@ -64,6 +82,15 @@ bool areNegInts(const IntegerVector xs) {
   return everyInVector(xs, [](int n) { return n < 0; });
 }
 
+//' Returns true iff all the xs are negative or NAs
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool areNegIntsOrNAs(const IntegerVector xs) {
+  return everyInVectorOrNAs(xs, [](int n) { return n < 0; });
+}
+
 //' Returns true iff all the xs are naturals (>= 0)
 //' @param xs vector to check
 //' @return true or false
@@ -71,6 +98,15 @@ bool areNegInts(const IntegerVector xs) {
 // [[Rcpp::export]]
 bool areNatInts(const IntegerVector xs) {
   return everyInVector(xs, [](int n) { return n >= 0; });
+}
+
+//' Returns true iff all the xs are naturals (>= 0) or NAs
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool areNatIntsOrNAs(const IntegerVector xs) {
+  return everyInVectorOrNAs(xs, [](int n) { return n >= 0; });
 }
 
 // DOUBLES
@@ -85,6 +121,15 @@ bool arePosDoubles(const DoubleVector xs) {
   return everyInVector(xs, [](double d) { return d > 0; });
 }
 
+//' Returns true iff all the xs are positive or NAs
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool arePosDoublesOrNAs(const DoubleVector xs) {
+  return everyInVectorOrNAs(xs, [](double d) { return d > 0; });
+}
+
 //' Returns true iff all the xs are negative
 //' @param xs vector to check
 //' @return true or false
@@ -94,6 +139,15 @@ bool areNegDoubles(const DoubleVector xs) {
   return everyInVector(xs, [](double d) { return d < 0; });
 }
 
+//' Returns true iff all the xs are negative or NAs
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool areNegDoublesOrNAs(const DoubleVector xs) {
+  return everyInVectorOrNAs(xs, [](double d) { return d < 0; });
+}
+
 //' Returns true iff all the xs are non-negative
 //' @param xs vector to check
 //' @return true or false
@@ -101,4 +155,13 @@ bool areNegDoubles(const DoubleVector xs) {
 // [[Rcpp::export]]
 bool areNonNegDoubles(const DoubleVector xs) {
   return everyInVector(xs, [](double d) { return d >= 0; });
+}
+
+//' Returns true iff all the xs are non-negative or NAs
+//' @param xs vector to check
+//' @return true or false
+//' @export
+// [[Rcpp::export]]
+bool areNonNegDoublesOrNAs(const DoubleVector xs) {
+  return everyInVectorOrNAs(xs, [](double d) { return d >= 0; });
 }

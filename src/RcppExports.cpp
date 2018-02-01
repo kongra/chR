@@ -40,6 +40,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// arePosIntsOrNAs
+bool arePosIntsOrNAs(const IntegerVector xs);
+RcppExport SEXP _chR_arePosIntsOrNAs(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(arePosIntsOrNAs(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
 // areNegInts
 bool areNegInts(const IntegerVector xs);
 RcppExport SEXP _chR_areNegInts(SEXP xsSEXP) {
@@ -48,6 +59,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector >::type xs(xsSEXP);
     rcpp_result_gen = Rcpp::wrap(areNegInts(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// areNegIntsOrNAs
+bool areNegIntsOrNAs(const IntegerVector xs);
+RcppExport SEXP _chR_areNegIntsOrNAs(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(areNegIntsOrNAs(xs));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -62,6 +84,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// areNatIntsOrNAs
+bool areNatIntsOrNAs(const IntegerVector xs);
+RcppExport SEXP _chR_areNatIntsOrNAs(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(areNatIntsOrNAs(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
 // arePosDoubles
 bool arePosDoubles(const DoubleVector xs);
 RcppExport SEXP _chR_arePosDoubles(SEXP xsSEXP) {
@@ -70,6 +103,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const DoubleVector >::type xs(xsSEXP);
     rcpp_result_gen = Rcpp::wrap(arePosDoubles(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// arePosDoublesOrNAs
+bool arePosDoublesOrNAs(const DoubleVector xs);
+RcppExport SEXP _chR_arePosDoublesOrNAs(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const DoubleVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(arePosDoublesOrNAs(xs));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -84,6 +128,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// areNegDoublesOrNAs
+bool areNegDoublesOrNAs(const DoubleVector xs);
+RcppExport SEXP _chR_areNegDoublesOrNAs(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const DoubleVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(areNegDoublesOrNAs(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
 // areNonNegDoubles
 bool areNonNegDoubles(const DoubleVector xs);
 RcppExport SEXP _chR_areNonNegDoubles(SEXP xsSEXP) {
@@ -95,16 +150,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// areNonNegDoublesOrNAs
+bool areNonNegDoublesOrNAs(const DoubleVector xs);
+RcppExport SEXP _chR_areNonNegDoublesOrNAs(SEXP xsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const DoubleVector >::type xs(xsSEXP);
+    rcpp_result_gen = Rcpp::wrap(areNonNegDoublesOrNAs(xs));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_chR_callsCount", (DL_FUNC) &_chR_callsCount, 0},
     {"_chR_chLL", (DL_FUNC) &_chR_chLL, 4},
     {"_chR_arePosInts", (DL_FUNC) &_chR_arePosInts, 1},
+    {"_chR_arePosIntsOrNAs", (DL_FUNC) &_chR_arePosIntsOrNAs, 1},
     {"_chR_areNegInts", (DL_FUNC) &_chR_areNegInts, 1},
+    {"_chR_areNegIntsOrNAs", (DL_FUNC) &_chR_areNegIntsOrNAs, 1},
     {"_chR_areNatInts", (DL_FUNC) &_chR_areNatInts, 1},
+    {"_chR_areNatIntsOrNAs", (DL_FUNC) &_chR_areNatIntsOrNAs, 1},
     {"_chR_arePosDoubles", (DL_FUNC) &_chR_arePosDoubles, 1},
+    {"_chR_arePosDoublesOrNAs", (DL_FUNC) &_chR_arePosDoublesOrNAs, 1},
     {"_chR_areNegDoubles", (DL_FUNC) &_chR_areNegDoubles, 1},
+    {"_chR_areNegDoublesOrNAs", (DL_FUNC) &_chR_areNegDoublesOrNAs, 1},
     {"_chR_areNonNegDoubles", (DL_FUNC) &_chR_areNonNegDoubles, 1},
+    {"_chR_areNonNegDoublesOrNAs", (DL_FUNC) &_chR_areNonNegDoublesOrNAs, 1},
     {NULL, NULL, 0}
 };
 

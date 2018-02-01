@@ -174,10 +174,18 @@ chReg(chNumeric)
 chPosInts <- chAnd(chInts, chP(arePosInts))
 chReg(chPosInts)
 
+#' @export
+chPosNAInts <- chAnd(chInts, chP(arePosIntsOrNAs))
+chReg(chPosNAInts)
+
 #' \code{chInt} & > 0 ch(eck)
 #' @export
 chPosInt <- chAnd(chInt, chP(arePosInts))
 chReg(chPosInt)
+
+#' @export
+chPosNAInt <- chAnd(chInt, chP(arePosIntsOrNAs))
+chReg(chPosNAInt)
 
 #' \code{chDoubles} & > 0 ch(eck)
 #' @export

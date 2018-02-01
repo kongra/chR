@@ -21,12 +21,28 @@ arePosInts <- function(xs) {
     .Call('_chR_arePosInts', PACKAGE = 'chR', xs)
 }
 
+#' Returns true iff all the xs are positive or NAs
+#' @param xs vector to check
+#' @return true or false
+#' @export
+arePosIntsOrNAs <- function(xs) {
+    .Call('_chR_arePosIntsOrNAs', PACKAGE = 'chR', xs)
+}
+
 #' Returns true iff all the xs are negative
 #' @param xs vector to check
 #' @return true or false
 #' @export
 areNegInts <- function(xs) {
     .Call('_chR_areNegInts', PACKAGE = 'chR', xs)
+}
+
+#' Returns true iff all the xs are negative or NAs
+#' @param xs vector to check
+#' @return true or false
+#' @export
+areNegIntsOrNAs <- function(xs) {
+    .Call('_chR_areNegIntsOrNAs', PACKAGE = 'chR', xs)
 }
 
 #' Returns true iff all the xs are naturals (>= 0)
@@ -37,12 +53,28 @@ areNatInts <- function(xs) {
     .Call('_chR_areNatInts', PACKAGE = 'chR', xs)
 }
 
+#' Returns true iff all the xs are naturals (>= 0) or NAs
+#' @param xs vector to check
+#' @return true or false
+#' @export
+areNatIntsOrNAs <- function(xs) {
+    .Call('_chR_areNatIntsOrNAs', PACKAGE = 'chR', xs)
+}
+
 #' Returns true iff all the xs are positive
 #' @param xs vector to check
 #' @return true or false
 #' @export
 arePosDoubles <- function(xs) {
     .Call('_chR_arePosDoubles', PACKAGE = 'chR', xs)
+}
+
+#' Returns true iff all the xs are positive or NAs
+#' @param xs vector to check
+#' @return true or false
+#' @export
+arePosDoublesOrNAs <- function(xs) {
+    .Call('_chR_arePosDoublesOrNAs', PACKAGE = 'chR', xs)
 }
 
 #' Returns true iff all the xs are negative
@@ -53,11 +85,27 @@ areNegDoubles <- function(xs) {
     .Call('_chR_areNegDoubles', PACKAGE = 'chR', xs)
 }
 
+#' Returns true iff all the xs are negative or NAs
+#' @param xs vector to check
+#' @return true or false
+#' @export
+areNegDoublesOrNAs <- function(xs) {
+    .Call('_chR_areNegDoublesOrNAs', PACKAGE = 'chR', xs)
+}
+
 #' Returns true iff all the xs are non-negative
 #' @param xs vector to check
 #' @return true or false
 #' @export
 areNonNegDoubles <- function(xs) {
     .Call('_chR_areNonNegDoubles', PACKAGE = 'chR', xs)
+}
+
+#' Returns true iff all the xs are non-negative or NAs
+#' @param xs vector to check
+#' @return true or false
+#' @export
+areNonNegDoublesOrNAs <- function(xs) {
+    .Call('_chR_areNonNegDoublesOrNAs', PACKAGE = 'chR', xs)
 }
 
