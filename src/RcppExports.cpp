@@ -15,6 +15,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// resetCallsCount
+void resetCallsCount();
+RcppExport SEXP _chR_resetCallsCount() {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    resetCallsCount();
+    return R_NilValue;
+END_RCPP
+}
+// incCallsCount
+void incCallsCount();
+RcppExport SEXP _chR_incCallsCount() {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    incCallsCount();
+    return R_NilValue;
+END_RCPP
+}
 // chLL
 SEXP chLL(const Function pred, const SEXP x, const bool asPred, const Function errMessage);
 RcppExport SEXP _chR_chLL(SEXP predSEXP, SEXP xSEXP, SEXP asPredSEXP, SEXP errMessageSEXP) {
@@ -164,6 +182,8 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_chR_callsCount", (DL_FUNC) &_chR_callsCount, 0},
+    {"_chR_resetCallsCount", (DL_FUNC) &_chR_resetCallsCount, 0},
+    {"_chR_incCallsCount", (DL_FUNC) &_chR_incCallsCount, 0},
     {"_chR_chLL", (DL_FUNC) &_chR_chLL, 4},
     {"_chR_arePosInts", (DL_FUNC) &_chR_arePosInts, 1},
     {"_chR_arePosIntsOrNAs", (DL_FUNC) &_chR_arePosIntsOrNAs, 1},

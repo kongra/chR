@@ -7,6 +7,18 @@ callsCount <- function() {
     .Call('_chR_callsCount', PACKAGE = 'chR')
 }
 
+#' Resets (zeroes) the value of calls counter
+#' @export
+resetCallsCount <- function() {
+    invisible(.Call('_chR_resetCallsCount', PACKAGE = 'chR'))
+}
+
+#' Increases the value of calls counter
+#' @export
+incCallsCount <- function() {
+    invisible(.Call('_chR_incCallsCount', PACKAGE = 'chR'))
+}
+
 #' Low Level ch(eck) call
 #' @export
 chLL <- function(pred, x, asPred, errMessage) {

@@ -14,9 +14,14 @@ errMessage <- function(x) {
   paste0(" ch(eck) failed on\n", r)
 }
 
+#' @export
+COUNT_CALLS <- FALSE
+
 #' Executes a ch(eck) of pred on x
 #' @export
 ch <- function(pred, x, asPred = FALSE) {
+  if (COUNT_CALLS) incCallsCount()
+
   r <- pred(x)
   if (asPred) return(r)
   if (!r)     stop(errMessage(x))

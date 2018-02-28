@@ -19,6 +19,22 @@ std::uint64_t callsCount()
   return chCallsCounter;
 }
 
+//' Resets (zeroes) the value of calls counter
+//' @export
+// [[Rcpp::export]]
+void resetCallsCount()
+{
+  chCallsCounter = 0;
+}
+
+//' Increases the value of calls counter
+//' @export
+// [[Rcpp::export]]
+void incCallsCount()
+{
+  chCallsCounter++;
+}
+
 //' Low Level ch(eck) call
 //' @export
 // [[Rcpp::export]]
