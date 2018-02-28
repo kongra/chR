@@ -14,8 +14,13 @@ errMessage <- function(x) {
   paste0(" ch(eck) failed on\n", r)
 }
 
-#' @export
 CHR_DIAGN <- FALSE
+
+#' @export
+chDiagnOn  <- function() CHR_DIAGN <<- TRUE
+
+#' @export
+chDiagnOff <- function() CHR_DIAGN <<- FALSE
 
 #' Executes a ch(eck) of pred on x
 #' @export
