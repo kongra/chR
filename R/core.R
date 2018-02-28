@@ -15,12 +15,12 @@ errMessage <- function(x) {
 }
 
 #' @export
-COUNT_CALLS <- FALSE
+CHR_DIAGN <- FALSE
 
 #' Executes a ch(eck) of pred on x
 #' @export
 ch <- function(pred, x, asPred = FALSE) {
-  if (COUNT_CALLS) incCallsCount()
+  if (CHR_DIAGN) incCallsCount()
 
   r <- pred(x)
   if (asPred) return(r)
