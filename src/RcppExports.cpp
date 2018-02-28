@@ -5,31 +5,31 @@
 
 using namespace Rcpp;
 
-// callsCount
-std::uint64_t callsCount();
-RcppExport SEXP _chR_callsCount() {
+// chDiagnCount
+std::uint64_t chDiagnCount();
+RcppExport SEXP _chR_chDiagnCount() {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(callsCount());
+    rcpp_result_gen = Rcpp::wrap(chDiagnCount());
     return rcpp_result_gen;
 END_RCPP
 }
-// resetCallsCount
-void resetCallsCount();
-RcppExport SEXP _chR_resetCallsCount() {
+// chDiagnCountReset
+void chDiagnCountReset();
+RcppExport SEXP _chR_chDiagnCountReset() {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    resetCallsCount();
+    chDiagnCountReset();
     return R_NilValue;
 END_RCPP
 }
-// incCallsCount
-void incCallsCount();
-RcppExport SEXP _chR_incCallsCount() {
+// chDiagnCountInc
+void chDiagnCountInc();
+RcppExport SEXP _chR_chDiagnCountInc() {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    incCallsCount();
+    chDiagnCountInc();
     return R_NilValue;
 END_RCPP
 }
@@ -181,9 +181,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_chR_callsCount", (DL_FUNC) &_chR_callsCount, 0},
-    {"_chR_resetCallsCount", (DL_FUNC) &_chR_resetCallsCount, 0},
-    {"_chR_incCallsCount", (DL_FUNC) &_chR_incCallsCount, 0},
+    {"_chR_chDiagnCount", (DL_FUNC) &_chR_chDiagnCount, 0},
+    {"_chR_chDiagnCountReset", (DL_FUNC) &_chR_chDiagnCountReset, 0},
+    {"_chR_chDiagnCountInc", (DL_FUNC) &_chR_chDiagnCountInc, 0},
     {"_chR_chLL", (DL_FUNC) &_chR_chLL, 4},
     {"_chR_arePosInts", (DL_FUNC) &_chR_arePosInts, 1},
     {"_chR_arePosIntsOrNAs", (DL_FUNC) &_chR_arePosIntsOrNAs, 1},

@@ -17,7 +17,7 @@ errMessage <- function(x) {
 #' Executes a ch(eck) of pred on x
 #' @export
 ch <- function(pred, x, asPred = FALSE) {
-  incCallsCount()
+  chDiagnCountInc()
   r <- pred(x)
   if (asPred) return(r)
   if (!r)     stop(errMessage(x))

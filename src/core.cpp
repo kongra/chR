@@ -9,30 +9,30 @@ using namespace Rcpp;
 
 // CALLING THE PREDICATES
 //
-static std::atomic<std::uint64_t> chCallsCounter(0);
+static std::atomic<std::uint64_t> chDiagnCounter(0);
 
 //' Returns the value of calls counter
 //' @export
 // [[Rcpp::export]]
-std::uint64_t callsCount()
+std::uint64_t chDiagnCount()
 {
-  return chCallsCounter;
+  return chDiagnCounter;
 }
 
 //' Resets (zeroes) the value of calls counter
 //' @export
 // [[Rcpp::export]]
-void resetCallsCount()
+void chDiagnCountReset()
 {
-  chCallsCounter = 0;
+  chDiagnCounter = 0;
 }
 
 //' Increases the value of calls counter
 //' @export
 // [[Rcpp::export]]
-void incCallsCount()
+void chDiagnCountInc()
 {
-  chCallsCounter++;
+  chDiagnCounter++;
 }
 
 //' Low Level ch(eck) call
@@ -42,7 +42,7 @@ SEXP chLL(const Function pred,
           const SEXP x,
           const bool asPred,
           const Function errMessage) {
-  chCallsCounter++;
+  chDiagnCountInc();
   const SEXP r = pred(x);
   if (asPred) return r;
   if (!as<bool>(r)) stop(as<const char*>(errMessage(x)));

@@ -3,20 +3,20 @@
 
 #' Returns the value of calls counter
 #' @export
-callsCount <- function() {
-    .Call('_chR_callsCount', PACKAGE = 'chR')
+chDiagnCount <- function() {
+    .Call('_chR_chDiagnCount', PACKAGE = 'chR')
 }
 
 #' Resets (zeroes) the value of calls counter
 #' @export
-resetCallsCount <- function() {
-    invisible(.Call('_chR_resetCallsCount', PACKAGE = 'chR'))
+chDiagnCountReset <- function() {
+    invisible(.Call('_chR_chDiagnCountReset', PACKAGE = 'chR'))
 }
 
 #' Increases the value of calls counter
 #' @export
-incCallsCount <- function() {
-    invisible(.Call('_chR_incCallsCount', PACKAGE = 'chR'))
+chDiagnCountInc <- function() {
+    invisible(.Call('_chR_chDiagnCountInc', PACKAGE = 'chR'))
 }
 
 #' Low Level ch(eck) call
