@@ -19,4 +19,5 @@ Imports: data.table,
     Rcpp,
     lubridate
 LinkingTo: Rcpp
+ByteCompile: true
 Suggests: testthat
