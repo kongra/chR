@@ -1,5 +1,6 @@
 # Copyright (c) Konrad Grzanek
-# Created: 2017-05-05
+# Created:     2017-05-05
+# Re-designed: 2018-04-24
 
 #' @import stringr
 #' @import purrr
