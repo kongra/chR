@@ -3,83 +3,65 @@
 
 #' @import stringr
 #' @import purrr
+#' @import readr
 #' @useDynLib chR
 #' @importFrom Rcpp sourceCpp
 NULL
 
 # ESSENTIALS
-
 errMessage <- function(x) {
   r <- paste(capture.output(str(x)), collapse = "\n")
-  paste0(" ch(eck) failed on\n", r)
+  paste0(" ch(eck) failed on\n", r, "\nof type ", typeof(x),
+         " and class ", class(x))
 }
 
-#' Executes a ch(eck) of pred on x
 #' @export
-ch <- function(pred, x, asPred = FALSE) {
-  chDiagnCountInc()
-  r <- pred(x)
-  if (asPred) return(r)
-  if (!r)     stop(errMessage(x))
-  x
+chP <- function(expr, arg = x) {
+  arg <- substitute(arg)
+
+  substitute(function(`<arg>`) {
+    if (!(expr)) stop(errMessage(`<arg>`))
+    `<arg>`
+  }) %>%
+    deparse %>%
+    str_replace_all("<arg>", as.character(arg)) %>%
+    parse(text = .) %>%
+    eval %>%
+    compiler::cmpfun(f = .)
 }
 
-#' Returns a ch(eck) based on the pred
 #' @export
-chP <- function(pred) {
-  function(x, asPred = FALSE) ch  (pred, x, asPred)
-# function(x, asPred = FALSE) chLL(pred, x, asPred, errMessage)
+chP1 <- function(expr, arg = x) {
+  substitute(chP(expr && length(arg) == 1L, arg = arg)) %>% eval
 }
 
-#' Returns a \code{inherits(., cls)} ch(eck)
 #' @export
-chInstance <- function(class) chP(function(x) inherits(x, class))
+chStrings <- chP(is.character(x))
+#' @export
+chString  <- chP1(is.character(x))
 
-#' Returns a ch(eck) that is a negation of the passed ch(eck)
 #' @export
-chNot <- function(c) chP(function(x) !c(x, asPred = TRUE))
-
-#' Returns a ch(eck) that &s all the passed ch(eck)s
-#' @export
-chAnd <- function(...) {
-  chs  <- list(...)
-  chP(function(x) {
-    for (c in chs) if (!c(x, asPred = TRUE)) return (FALSE)
-    TRUE
-  })
+chInstance <- function(class) {
+  chString(class)
+  substitute(chP(inherits(x, class))) %>% eval
 }
 
-#' Returns a ch(eck) that |s all the passed ch(eck)s
 #' @export
-chOr <- function(...) {
-  chs <- list(...)
-  chP(function(x) {
-    for (c in chs) if (c(x, asPred = TRUE)) return (TRUE)
-    FALSE
-  })
+chInstance1 <- function(class) {
+  chString(class)
+  substitute(chP(inherits(x, class) && length(x) == 1L)) %>% eval
 }
 
 # ESSENTIAL CH(ECK)S
 
-#' \code{is.null} ch(eck)
 #' @export
-chUnit <- chP(is.null)
+chUnit <- chP(is.null(x))
 
-#' Scalar \code{is.atomic} & \code{length == 1L} value ch(eck)
 #' @export
-chScalar <- chP(function(x) is.atomic(x) && length(x) == 1L)
+chScalar <- chP1(is.atomic(x))
 
-#' \code{is.character} ch(eck)
 #' @export
-chStrings <- chP(is.character)
-
-#' \code{chScalar} & \code{chStrings} ch(eck)
-#' @export
-chString <- chAnd(chScalar, chStrings)
-
-#' \code{is.function} ch(eck)
-#' @export
-chFun <- chP(is.function)
+chFun <- chP(is.function(x))
 
 # REGISTRY
 
@@ -93,312 +75,246 @@ chReg <- function(ch, name = NA) { # BEWARE: THREAD UNSAFE
   NULL
 }
 
+chReg(chStrings)
+chReg(chString)
 chReg(chUnit)
 chReg(chScalar)
-chReg(chString)
-chReg(chStrings)
 chReg(chFun)
 
 # REST OF THE CH(ECK)S
 
-#' \code{!is.null} ch(eck)
 #' @export
-chSome <- chP(function(x) !is.null(x))
+chSome <- chP(!is.null(x))
 chReg(chSome)
 
-#' \code{is.na} ch(eck)
 #' @export
-chNA <- chAnd(chScalar, chP(is.na))
-chReg(chNA)
+chMaybe <- function(check, x) if (is.null(x)) NULL else check(x)
 
-#' Either ch(eck) where the left and right types are expressed by checks
-#' cl and cr.
 #' @export
-chEither <- function(cl, cr, x, asPred = FALSE) chOr(cl, cr)(x, asPred)
-
-#' Maybe ch(eck)
-#' @export
-chMaybe <- function(c, x, asPred = FALSE) chEither(chUnit, c, x, asPred)
-
-#' \code{is.logical} ch(eck)
-#' @export
-chBools <- chP(is.logical)
+chBools <- chP(is.logical(x))
 chReg(chBools)
 
-#' \code{chScalar} & \code{chBools} ch(eck)
 #' @export
-chBool <- chAnd(chScalar, chBools)
+chBool <- chP1(is.logical(x))
 chReg(chBool)
 
-#' \code{is.integer} ch(eck)
 #' @export
-chInts <- chP(is.integer)
+chInts <- chP(is.integer(x))
 chReg(chInts)
 
-#' \code{chScalar} & \code{chInts} ch(eck)
 #' @export
-chInt <- chAnd(chScalar, chInts)
+chInt <- chP1(is.integer(x))
 chReg(chInt)
 
-#' \code{is.double} ch(eck)
 #' @export
-chDoubles <- chP(is.double)
+chDoubles <- chP(is.double(x))
 chReg(chDoubles)
 
-#' \code{chScalar} & \code{chDoubles} ch(eck)
 #' @export
-chDouble <- chAnd(chScalar, chDoubles)
+chDouble <- chP1(is.double(x))
 chReg(chDouble)
 
-#' \code{is.complex} ch(eck)
 #' @export
-chComplexes <- chP(is.complex)
+chComplexes <- chP(is.complex(x))
 chReg(chComplexes)
 
-#' \code{chScalar} & \code{chComplexes} ch(eck)
 #' @export
-chComplex <- chAnd(chScalar, chComplexes)
+chComplex <- chP1(is.complex(x))
 chReg(chComplex)
 
-#' \code{is.numeric} ch(eck)
 #' @export
-chNumerics <- chP(is.numeric)
+chNumerics <- chP(is.numeric(x))
 chReg(chNumerics)
 
-#' \code{chScalar} & \code{chNumerics} ch(eck)
 #' @export
-chNumeric  <- chAnd(chScalar, chNumerics)
+chNumeric <- chP1(is.numeric(x))
 chReg(chNumeric)
 
-#' \code{chInts} & > 0 ch(eck)
 #' @export
-chPosInts <- chAnd(chInts, chP(arePosInts))
+chPosInts <- chP(is.integer(x) && arePosInts(x))
 chReg(chPosInts)
 
-#' \code{chInts} & > 0 || is.na ch(eck)
 #' @export
-chPosNAInts <- chAnd(chInts, chP(arePosIntsOrNAs))
-chReg(chPosNAInts)
-
-#' \code{chInt} & > 0 ch(eck)
-#' @export
-chPosInt <- chAnd(chInt, chP(arePosInts))
+chPosInt <- chP1(is.integer(x) && arePosInts(x))
 chReg(chPosInt)
 
-#' \code{chInt} & > 0 || is.na ch(eck)
 #' @export
-chPosNAInt <- chAnd(chInt, chP(arePosIntsOrNAs))
+chPosNAInts <- chP(is.integer(x) && arePosIntsOrNAs(x))
+chReg(chPosNAInts)
+
+#' @export
+chPosNAInt <- chP1(is.integer(x) && arePosIntsOrNAs(x))
 chReg(chPosNAInt)
 
-#' \code{chDoubles} & > 0 ch(eck)
 #' @export
-chPosDoubles <- chAnd(chDoubles, chP(arePosDoubles))
+chPosDoubles <- chP(is.double(x) && arePosDoubles(x))
 chReg(chPosDoubles)
 
-#' \code{chDouble} & > 0 ch(eck)
 #' @export
-chPosDouble <- chAnd(chDouble, chP(arePosDoubles))
+chPosDouble <- chP1(is.double(x) && arePosDoubles(x))
 chReg(chPosDouble)
 
-#' \code{chInts} & < 0 ch(eck)
 #' @export
-chNegInts <- chAnd(chInts, chP(areNegInts))
+chNegInts <- chP(is.integer(x) && areNegInts(x))
 chReg(chNegInts)
 
-#' \code{chInt} & < 0 ch(eck)
 #' @export
-chNegInt <- chAnd(chInt, chP(areNegInts))
+chNegInt <- chP1(is.integer(x) && areNegInts(x))
 chReg(chNegInt)
 
-#' \code{chDoubles} & < 0 ch(eck)
 #' @export
-chNegDoubles <- chAnd(chDoubles, chP(areNegDoubles))
+chNegDoubles <- chP(is.double(x) && areNegDoubles(x))
 chReg(chNegDoubles)
 
-#' \code{chDouble} & < 0 ch(eck)
 #' @export
-chNegDouble <- chAnd(chDouble, chP(areNegDoubles))
+chNegDouble <- chP1(is.double(x) && areNegDoubles(x))
 chReg(chNegDouble)
 
-#' \code{chInts} & >= 0 ch(eck)
 #' @export
-chNatInts <- chAnd(chInts, chP(areNatInts))
+chNatInts <- chP(is.integer(x) && areNatInts(x))
 chReg(chNatInts)
 
-#' \code{chInt} & >= 0 ch(eck)
 #' @export
-chNatInt <- chAnd(chInt, chP(areNatInts))
+chNatInt <- chP1(is.integer(x) && areNatInts(x))
 chReg(chNatInt)
 
-#' \code{chDoubles} & >= 0 ch(eck)
 #' @export
-chNonNegDoubles <- chAnd(chDoubles, chP(areNonNegDoubles))
+chNonNegDoubles <- chP(is.double(x) && areNonNegDoubles(x))
 chReg(chNonNegDoubles)
 
-#' \code{chDouble} & >= 0 ch(eck)
 #' @export
-chNonNegDouble <- chAnd(chDouble, chP(areNonNegDoubles))
+chNonNegDouble <- chP1(is.double(x) && areNonNegDoubles(x))
 chReg(chNonNegDouble)
 
-#' \code{chInt} & even? check
 #' @export
-chEvenInt <- chAnd(chInt, chP(function (x) x %% 2L == 0L))
+chEvenInt <- chP(is.integer(x) && length(x) == 1L && x %% 2L == 0L)
 chReg(chEvenInt)
 
-#' \code{chInt} & odd? check
 #' @export
-chOddInt <- chAnd(chInt, chP(function (x) x %% 2L != 0L))
+chOddInt <- chP(is.integer(x) && length(x) == 1L && x %% 2L != 0L)
 chReg(chOddInt)
 
-#' \code{is.list} ch(eck)
 #' @export
-chList <- chP(is.list)
+chList <- chP(is.list(x))
 chReg(chList)
 
-#' \code{is.vector} ch(eck)
 #' @export
-chVector <- chP(is.vector)
+chVector <- chP(is.vector(x))
 chReg(chVector)
 
-#' \code{is.factor} ch(eck)
 #' @export
-chFactor <- chP(is.factor)
+chFactors <- chP(is.factor(x))
+chReg(chFactors)
+
+#' @export
+chFactor <- chP1(is.factor(x))
 chReg(chFactor)
 
-#' \code{is.data.frame} ch(eck)
 #' @export
-chDF <- chP(is.data.frame)
+chDF <- chInstance("data.frame")
 chReg(chDF)
 
-#' \code{data.table::is.data.table} ch(eck)
 #' @export
-chDT <- chP(data.table::is.data.table)
+chDT <- chInstance("data.table")
 chReg(chDT)
 
-#' Returns a check for the data.table having exactly n rows
 #' @export
 chDTn <- function(n) {
-  chNatInt(n)
-  chAnd(chDT, chP(function(dt) nrow(dt) == n))
+  # chNatInt(n)
+  substitute(chP(inherits(x, "data.table") && nrow(x) == n)) %>% eval
 }
 
-#' Returns a check for the data.table having exactly 0 or n rows
 #' @export
 chDT0n <- function(n) {
-  chNatInt(n)
-  chAnd(chDT, chP(function(dt) {
-    nr <- nrow(dt)
-    nr == 0L || nr == n
-  }))
+  # chPosInt(n)
+  substitute(chP(inherits(x, "data.table") && {
+    i <- nrow(x)
+    i == 0L || i == n
+  })) %>% eval
 }
 
-#' Ch(eck) for an empty data.table
 #' @export
-chDT0 <- NULL
-delayedAssign("chDT0", chDTn(0L))
+chDT0 <- chDTn(0L)
 
-#' Ch(eck) for a single-row data.table
 #' @export
-chDT1 <- NULL
-delayedAssign("chDT1", chDTn(1L))
+chDT1 <- chDTn(1L)
 
-#' Ch(eck) for an empty or single-row data.table
 #' @export
-chDT01 <- NULL
-delayedAssign("chDT01", chDT0n(1L))
+chDT01 <- chDT0n(1L)
 
-#' \code{ggplot2::is.ggplot} ch(eck)
 #' @export
-chGgplot <- chP(ggplot2::is.ggplot)
+chGgplot <- chP(ggplot2::is.ggplot(x))
 chReg(chGgplot)
 
-#' \code{tibble::is.tibble} ch(eck)
 #' @export
-chTibble <- chP(tibble::is.tibble)
+chTibble <- chP(tibble::is.tibble(x)) # Consider chInstance
 chReg(chTibble)
 
-#' \code{is.array} ch(eck)
 #' @export
-chArray <- chP(is.array)
+chArray <- chP(is.array(x))
 chReg(chArray)
 
-#' \code{is.atomic} ch(eck)
 #' @export
-chAtomic <- chP(is.atomic)
+chAtomic <- chP(is.atomic(x))
 chReg(chAtomic)
 
-#' \code{is.recursive} ch(eck)
 #' @export
-chRecursive <- chP(is.recursive)
+chRecursive <- chP(is.recursive(x))
 chReg(chRecursive)
 
-#' \code{is.object} ch(eck)
 #' @export
-chObject <- chP(is.object)
+chObject <- chP(is.object(x))
 chReg(chObject)
 
-#' \code{is.matrix} ch(eck)
 #' @export
-chMatrix <- chP(is.matrix)
+chMatrix <- chP(is.matrix(x))
 chReg(chMatrix)
 
-#' \code{is.table} ch(eck)
 #' @export
-chTable <- chP(is.table)
+chTable <- chP(is.table(x))
 chReg(chTable)
 
-#' \code{is.environment} ch(eck)
 #' @export
-chEnv <- chP(is.environment)
+chEnv <- chP(is.environment(x))
 chReg(chEnv)
 
-#' \code{is.call} ch(eck)
 #' @export
-chCall <- chP(is.call)
+chCall <- chP(is.call(x))
 chReg(chCall)
 
-#' \code{is.expression} ch(eck)
 #' @export
-chExpr <- chP(is.expression)
+chExpr <- chP(is.expression(x))
 chReg(chExpr)
 
-#' \code{is.symbol} ch(eck)
 #' @export
-chSymbol <- chP(is.symbol)
+chSymbol <- chP(is.symbol(x))
 chReg(chSymbol)
 
-#' \code{s == ""} ch(eck) for String, deliberately not chReg-ed
 #' @export
-chEmptyString <- chAnd(chString, chP(function(s) s == ""))
-
-#' \code{s != ""} ch(eck) for String, deliberately not chReg-ed
-#' @export
-chNonEmptyString <- chNot(chEmptyString)
-
-#' Blank-ness ch(eck) for String, deliberately not chReg-ed
-#' @export
-chBlank <- chAnd(chString, chP(function(s) is.na(readr::parse_character(s))))
-
-#' Non blank-ness ch(eck) for String, deliberately not chReg-ed
-#' @export
-chNonBlank <- chNot(chBlank)
-
-#' \code{lubridate::is.Date} ch(eck)
-#' @export
-chDates <- chP(lubridate::is.Date)
+chDates <- chInstance("Date")
 chReg(chDates)
 
-#' \code{chScalar} & \code{chDates} ch(eck)
 #' @export
-chDate  <- chAnd(chScalar, chDates)
+chDate  <- chInstance1("Date")
 chReg(chDate)
 
+#' @export
+chNonBlank <- chP(is.character(x) && length(x) == 1L && !is.na(parse_character(x)))
+chReg(chNonBlank)
+
 # QUERYING THE REGISTRY
+
+asPred <- function(check, x) chBool({
+  tryCatch({
+    check(x)
+    TRUE
+  }, error = function(e) FALSE)
+})
 
 #' Returns a vector of ch(eck)s names that x passes
 #' @export
 chs <- function(x) chStrings ({
-  CHSREG %>% keep(~ .x(x, asPred = TRUE)) %>% names() %>% sort()
+  CHSREG %>% keep(function(check) asPred(check, x)) %>% names %>% sort
 })
 
 #' Returns a vector of ch(eck)s names passed by all the arguments
@@ -413,11 +329,3 @@ chsAll <- function(...) chStrings ({
 chsDiff <- function(...) chStrings ({
   list(...) %>% map(~ chs(.x)) %>% reduce(setdiff)
 })
-
-# TAGGED (CONSTRAINED) VALUES
-
-#' Returns x tagged with class=tag
-#' @export
-tagged <- function(x, tag) {
-  structure(list(value = x), class = tag)
-}
