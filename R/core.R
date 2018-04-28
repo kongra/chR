@@ -330,34 +330,3 @@ chsAll <- function(...) chStrings ({
 chsDiff <- function(...) chStrings ({
   list(...) %>% map(~ chs(.x)) %>% reduce(setdiff)
 })
-
-# test1 <- function() {
-#   value <- 0
-#   for (i in 0:999999) value <- value + i
-#   value
-# }
-#
-# test2 <- function() chDouble({
-#   value <- 0
-#   for (i in 0:999999) value <- value + i
-#   value
-# })
-#
-# catimela(test1())
-# catimela(test2())
-#
-# catimela({
-#   value <- 0
-#   for (i in 0:999999) value <- value + i
-#   value
-# })
-#
-# catimela(chDouble({
-#   value <- 0
-#   for (i in 0:999999) value <- value + i
-#   value
-# }))
-
-# microbenchmark::microbenchmark(
-#   test1()
-# )
