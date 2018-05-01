@@ -200,7 +200,7 @@ chList <- chP(is.list(x))
 chReg(chList)
 
 #' @export
-chVector <- chP(is.vector(x))
+chVector <- chP(is.atomic(x) && is.vector(x))
 chReg(chVector)
 
 #' @export
