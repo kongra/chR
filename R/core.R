@@ -299,10 +299,6 @@ chReg(chDates)
 chDate  <- chInstance1("Date")
 chReg(chDate)
 
-#' @export
-chNonBlank <- chP(is.character(x) && length(x) == 1L && !is.na(parse_character(x)))
-chReg(chNonBlank)
-
 # QUERYING THE REGISTRY
 
 asPred <- function(check, x) chBool({
