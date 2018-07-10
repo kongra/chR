@@ -10,6 +10,8 @@
 NULL
 
 # ESSENTIALS
+
+#' @export
 errMessage <- function(x) {
   r <- paste(capture.output(str(x)), collapse = "\n")
   paste0(" ch(eck) failed on\n", r, "\nof type ", typeof(x),
