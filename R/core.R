@@ -9,6 +9,9 @@
 #' @importFrom Rcpp sourceCpp
 NULL
 
+library(compiler)
+enableJIT(3L)
+
 # ESSENTIALS
 
 #' @export

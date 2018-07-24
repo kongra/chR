@@ -17,7 +17,8 @@ Imports: data.table,
     purrr,
     readr,
     Rcpp,
-    lubridate
+    lubridate,
+    compiler
 LinkingTo: Rcpp
 ByteCompile: true
 Suggests: testthat
