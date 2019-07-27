@@ -14,24 +14,21 @@ static std::atomic<std::uint64_t> chDiagnCounter(0);
 //' Returns the value of calls counter
 //' @export
 // [[Rcpp::export]]
-std::uint64_t chDiagnCount()
-{
+std::uint64_t chDiagnCount() {
   return chDiagnCounter;
 }
 
 //' Resets (zeroes) the value of calls counter
 //' @export
 // [[Rcpp::export]]
-void chDiagnCountReset()
-{
+void chDiagnCountReset() {
   chDiagnCounter = 0;
 }
 
 //' Increases the value of calls counter
 //' @export
 // [[Rcpp::export]]
-void chDiagnCountInc()
-{
+void chDiagnCountInc() {
   chDiagnCounter++;
 }
 

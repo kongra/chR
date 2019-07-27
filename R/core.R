@@ -305,7 +305,6 @@ chDate  <- chInstance1("Date")
 chReg(chDate)
 
 # QUERYING THE REGISTRY
-
 asPred <- function(check, x) chBool({
   tryCatch({
     check(x)
