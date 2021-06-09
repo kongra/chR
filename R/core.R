@@ -17,19 +17,22 @@ enableJIT(3L)
 #' @export
 errMessage <- function(x) {
   r <- paste(capture.output(str(x)), collapse = "\n")
-  paste0(" ch(eck) failed on\n", r, "\nof type ", typeof(x),
+  paste0(" ch(eck) failed on\n", r, "\n",
+         "of type ", typeof(x),
          " and class ", class(x))
 }
 
 #' @export
 chP <- function(expr, arg = x) {
-  arg <- substitute(arg)
+  currentEnv <- environment()
+  arg        <- substitute(arg, env = currentEnv)
 
   substitute({
     function(`<arg>`) {
       if (!(expr)) stop(errMessage(`<arg>`))
       `<arg>`
-    }}) %>%
+    }
+  }, env = currentEnv) %>%
     deparse %>%
     str_replace_all("<arg>", as.character(arg)) %>%
     parse(text = .) %>%
@@ -38,7 +41,8 @@ chP <- function(expr, arg = x) {
 
 #' @export
 chP1 <- function(expr, arg = x) {
-  substitute(chP(expr && length(arg) == 1L, arg = arg)) %>% eval
+  substitute(chP(expr && length(arg) == 1L, arg = arg),
+             env = environment()) %>% eval
 }
 
 #' @export
@@ -49,13 +53,15 @@ chString  <- chP1(is.character(x))
 #' @export
 chInstance <- function(class) {
   chString(class)
-  substitute(chP(inherits(x, class))) %>% eval
+  substitute(chP(inherits(x, class)),
+             env = environment()) %>% eval
 }
 
 #' @export
 chInstance1 <- function(class) {
   chString(class)
-  substitute(chP(inherits(x, class) && length(x) == 1L)) %>% eval
+  substitute(chP(inherits(x, class) && length(x) == 1L),
+             env = environment()) %>% eval
 }
 
 # ESSENTIAL CH(ECK)S
@@ -73,10 +79,10 @@ chFun <- chP(is.function(x))
 
 CHSREG <- list()
 
-#' Registeres the ch(eck) using an optional name (ch(eck) name by default)
+#' Registers the ch(eck) using an optional name (ch(eck) name by default)
 #' @export
 chReg <- function(ch, name = NA) { # BEWARE: THREAD UNSAFE
-  if (is.na(name)) name <- as.character(substitute(ch))
+  if (is.na(name)) name <- as.character(substitute(ch, env = environment()))
   CHSREG[[as.character(name)]] <<- as.function(ch)
   NULL
 }
@@ -226,17 +232,16 @@ chReg(chDT)
 
 #' @export
 chDTn <- function(n) {
-  # chNatInt(n)
-  substitute(chP(inherits(x, "data.table") && nrow(x) == n)) %>% eval
+  substitute(chP(inherits(x, "data.table") && nrow(x) == n),
+             env = environment()) %>% eval
 }
 
 #' @export
 chDT0n <- function(n) {
-  # chPosInt(n)
   substitute(chP(inherits(x, "data.table") && {
     i <- nrow(x)
     i == 0L || i == n
-  })) %>% eval
+  }), env = environment()) %>% eval
 }
 
 #' @export
