@@ -16,6 +16,7 @@ Imports: data.table,
     tibble,
     purrr,
     readr,
+    stringr,
     Rcpp,
     lubridate,
     compiler
